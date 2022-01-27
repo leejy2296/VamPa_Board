@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.vam.model.BoardVO;
+import com.vam.model.Criteria;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
@@ -21,6 +22,7 @@ public class BoardMapperTests {
     @Autowired
     private BoardMapper mapper;
 
+    /* 게시글 등록 테스트 */
     @Test
     public void testEnroll() {
 
@@ -34,7 +36,7 @@ public class BoardMapperTests {
 
     }
 
-    /* 게시판 목록 테스트 */
+    /* 게시글 목록 테스트 */
     @Test
     public void testGetList() {
         List list = mapper.getList();
@@ -42,5 +44,49 @@ public class BoardMapperTests {
         for (Object a : list) {
             log.info("" + a);
         }
+    }
+
+    /* 게시글 상세 조회 테스트 */
+    @Test
+    public void testGetPage() {
+
+        /* 실제 존재하는 페이지 */
+        int bno = 1;
+
+        log.info("" + mapper.getPage(bno));
+
+    }
+
+    /* 게시글 수정 테스트 */
+    @Test
+    public void testModify() {
+
+        BoardVO board = new BoardVO();
+        board.setBno(1);
+        board.setTitle("수정 제목");
+        board.setContent("수정 내용");
+
+        int result = mapper.modify(board);
+        log.info("result : " + result);
+
+    }
+
+    /* 게시글 삭제 테스트 */
+    @Test
+    public void testDelete() {
+
+        int result = mapper.delete(23);
+        log.info("result : " + result);
+
+    }
+
+    /* 게시글 목록(페이징 적용)테스트 */
+    @Test
+    public void testGetListPaging() {
+
+        Criteria cri = new Criteria();
+        cri.setPageNum(4);
+        List list = mapper.getListPaging(cri);
+        list.forEach(board -> log.info("" + board));
     }
 }

@@ -7,13 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.vam.mapper.BoardMapper;
 import com.vam.model.BoardVO;
+import com.vam.model.Criteria;
 
 @Service
 public class BoardServiceImpl implements BoardService {
     @Autowired
     private BoardMapper mapper;
 
-    /* 게시판 등록 */
+    /* 게시글 등록 */
     @Override
     public void enroll(BoardVO board) {
 
@@ -21,10 +22,45 @@ public class BoardServiceImpl implements BoardService {
 
     }
 
-    /* 게시판 목록 */
+    /* 게시글 목록 */
     @Override
     public List<BoardVO> getList() {
 
         return mapper.getList();
+    }
+
+    /* 게시글 목록(페이징 적용) */
+    @Override
+    public List<BoardVO> getListPaging(Criteria cri) {
+
+        return mapper.getListPaging(cri);
+    }
+
+    /* 게시글 수정 */
+    @Override
+    public int modify(BoardVO board) {
+
+        return mapper.modify(board);
+    }
+
+    /* 게시글 상세 조회 */
+    @Override
+    public BoardVO getPage(int bno) {
+
+        return mapper.getPage(bno);
+    }
+
+    /* 게시글 삭제 */
+    @Override
+    public int delete(int bno) {
+
+        return mapper.delete(bno);
+    }
+
+    /* 게시물 총 갯수 */
+    @Override
+    public int getTotal() {
+
+        return mapper.getTotal();
     }
 }
